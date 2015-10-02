@@ -3,6 +3,8 @@ var main = function(){
   var camera,scene,renderer;
   var angle = 0.001, radius = 400;
   var moonLight,sunLight,hemLight;
+  var moonLightx, moonLighty, moonLightz = -10;
+  var sunLightx, sunLighty, sunLightz = -10;
   
   var hElW = $('#background').width();
   var hElH = $('#background').height();
@@ -45,7 +47,8 @@ var main = function(){
   	var gMat = new THREE.MeshPhongMaterial({color:0xFFFFFF,specular:0x050505});
   		gMat.color.setHSL(0.095, 1 , 0.75);
   	var gnd = new THREE.Mesh(gGeo,gMat);
-  		gnd.position.set(-1.7,-150,-100);
+  		gnd.position.set(0,-150,-100);
+  		gnd.rotation.x = -1.7;
   		scene.add(gnd);
   		
   	//Lights
@@ -74,6 +77,21 @@ var main = function(){
   		moonLight.add(moonSpotLight);
   		moonSpotLight.target = camera;
   }
+  
+  function initSky(){
+  	
+  	moonLightx = Math.sin(angle) * radius;
+  	moonLighty = Math.cos(angle) * radius;
+  	
+  	sunLightx = Math.sin(angle + 3.15) * radius;
+  	sunLighty = Math.cos(angle + 3.15) * radius;
+  	
+  	moonLight.position.set(moonLightx, moonLighty, moonLightz);
+  	sunLight.position.set(sunLightx, sunLighty, sunLightz);
+  	
+  	
+  }
+  
   
   var render = function(){
     	requestAnimationFrame(render);
