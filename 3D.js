@@ -1,7 +1,9 @@
 var main = function(){
-console.log("help");
+	
   var camera,scene,renderer;
-  var cubeMesh;
+  var angle = 0.001, radius = 400;
+  var moonLight,sunLight,hemLight;
+  
   var hElW = $('#background').width();
   var hElH = $('#background').height();
   
@@ -15,13 +17,8 @@ console.log("help");
 	scene.add(camera);		
 	camera.updateProjectionMatrix();
 		
-		
-	var geo = new THREE.BoxGeometry(100,100,100);
-	var mat = new THREE.MeshBasicMaterial({color:0xff0000});
-		
-	cubeMesh = new THREE.Mesh(geo,mat);
-	scene.add(cubeMesh);
-		
+	initSkySolar();
+	//initSky();
 		
 		
 	renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -30,6 +27,42 @@ console.log("help");
     
     
     	document.getElementById("background").appendChild(renderer.domElement);
+    	
+  }
+  
+  function initSkySolar(){
+  	var moonMeshHelper = new THREE.Mesh(new THREE.SphereGeometry(8,16,8),new THREE.MeshBasicMaterial({color:0xE6E6E6}));
+  	var sunMeshHelper = new THREE.Mesh(new THREE.SphereGeometry(8,16,8),new THREE.MeshBasicMaterial({color:0xEECD4D}));
+  	
+  	var cycleOriginMeshHelper = new THREE.Mesh(new THREE.SphereGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xFFFFFF}));
+  		cycleOriginMeshHelper.position.set(0,-185,-350);
+  		scene.add(cycleOriginMeshHelper);
+  		
+  	var gGeo = new THREE.PlaneGeometry(1200,600);
+  	var gMat = new THREE.MeshPhongaMaterial({color:0xFFFFFF,specular:0x050505});
+  		gMat.color.setHSL(0.095, 1 , 0.75);
+  	var gnd = new THREE.Mesh(gGeo,gMat);
+  		gnd.position.set(-1.7,-150,-100);
+  		scene.add(gnd);
+  		
+  	//Lights
+  	moonLight = new THREE.PointLight(0xA0B7FF,1,2000);
+  		cycleOriginMeshHelper.add(moonLight);
+  		moonLight.add(moonMeshHelper);
+  		
+  	sunLight = new THREE.PointLight(0xFF9900,5,2000);
+  		cycleOriginMeshHelper.add(sunLight);
+  		sunLight.add(sunMeshHelper);
+  		
+  	var sunSpotLight = new THREE.SpotLight(0xFFFFFF);
+  		sunLight.intensity = 1.2;
+  		sunLight.add(sunSpotLight);
+  		sunSpotLight.target = camera;
+  	
+  	var moonSpotLight = new THREE.SpotLight(0x595959);
+  		moonLight.intensity = 1.6;
+  		moonLight.add(moonSpotLight);
+  		moonSpotLight.target = camera;
   }
   
   var render = function(){
