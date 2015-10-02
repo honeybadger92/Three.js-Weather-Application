@@ -20,10 +20,8 @@ var main = function(){
 	camera.updateProjectionMatrix();
 		
 	initSkySolar();
-	//initSky();
+	initSky();
 		
-	var cubeMesh = new THREE.Mesh(new THREE.BoxGeometry(100,100,100),new THREE.MeshBasicMaterial({color:0xFF0000}));
-		scene.add(cubeMesh);
 		
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	//size of the canvas
@@ -89,7 +87,10 @@ var main = function(){
   	moonLight.position.set(moonLightx, moonLighty, moonLightz);
   	sunLight.position.set(sunLightx, sunLighty, sunLightz);
   	
+  	sunLight.color.setHSL(0.1,1,0.95);
+  	hemLight.color.setHSL(0.63,1,0.60);
   	
+  	//renderer.render(scene,camera);
   }
   
   
