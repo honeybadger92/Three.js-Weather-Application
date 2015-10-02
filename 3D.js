@@ -39,7 +39,7 @@ var main = function(){
   		scene.add(cycleOriginMeshHelper);
   		
   	var gGeo = new THREE.PlaneGeometry(1200,600);
-  	var gMat = new THREE.MeshPhongaMaterial({color:0xFFFFFF,specular:0x050505});
+  	var gMat = new THREE.MeshPhongMaterial({color:0xFFFFFF,specular:0x050505});
   		gMat.color.setHSL(0.095, 1 , 0.75);
   	var gnd = new THREE.Mesh(gGeo,gMat);
   		gnd.position.set(-1.7,-150,-100);
