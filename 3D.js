@@ -20,6 +20,8 @@ var main = function(){
 	initSkySolar();
 	//initSky();
 		
+	var cubeMesh = new THREE.Mesh(new THREE.BoxGeometry(100,100,100),new THREE.MeshBasicMaterial({color:0xFF0000}));
+		scene.add(cubeMesh);
 		
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	//size of the canvas
@@ -31,6 +33,7 @@ var main = function(){
   }
   
   function initSkySolar(){
+  	console.log("initSkySolar");
   	var moonMeshHelper = new THREE.Mesh(new THREE.SphereGeometry(8,16,8),new THREE.MeshBasicMaterial({color:0xE6E6E6}));
   	var sunMeshHelper = new THREE.Mesh(new THREE.SphereGeometry(8,16,8),new THREE.MeshBasicMaterial({color:0xEECD4D}));
   	
@@ -53,6 +56,13 @@ var main = function(){
   	sunLight = new THREE.PointLight(0xFF9900,5,2000);
   		cycleOriginMeshHelper.add(sunLight);
   		sunLight.add(sunMeshHelper);
+  		
+  	hemLight = new THREE.HemisphereLight(0xffffff,0xffffff,0.6);
+		hemLight.color.setHSL(0.6,1,0.27);
+		hemLight.groundColor.setHSL(0.095,1,0.75);
+		hemLight.position.set(0,500,0);
+		scene.add(hemLight);
+		
   		
   	var sunSpotLight = new THREE.SpotLight(0xFFFFFF);
   		sunLight.intensity = 1.2;
